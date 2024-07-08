@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<style>
+    body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #fafafa;
+    color: #333;
+    display: flex;
+}
+
+.sidebar {
+    width: 240px;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    position: fixed;
+    height: 100%;
+}
+
+.brand {
+    font-family: 'Grand Hotel', cursive;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.nav-link {
+    color: #fff;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding: 50px 0;
+    width: 100%;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.nav-link i {
+    margin-right: 10px;
+}
+
+.nav-link:hover {
+    background-color: #333;
+    border-radius: 10px;
+}
+
+.badge {
+    margin-left: 10px;
+}
+
+.content {
+    margin-left: 240px;
+    padding: 20px;
+    width: calc(100% - 240px);
+    box-sizing: border-box;
+}
+
+</style>
+<body>
+    <div class="sidebar">
+        <div class="brand">
+            <a class="navbar-brand" href="{% url 'home' %}">10-v-gramm</a>
+        </div>
+        <nav class="nav flex-column">
+            {% if user.is_authenticated %}
+                <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home"></i> Главная</a>
+            <a class="nav-link" href="{% url 'reels' %}"><i class="fas fa-film"></i> Reels</a>
+            <a class="nav-link" href="{% url 'chats'  %}"><i class="fas fa-envelope"></i> Сообщения</a>
+            <a class="nav-link" href="{% url 'add_post' %}"><i class="fas fa-plus-square"></i> Создать</a>
+            <a class="nav-link" href="{% url 'profile' user.username %}"><i class="fas fa-user"></i> Профиль</a>
+            <a class="nav-link" href="{% url 'logout'%}"><i class="fas fa-user"></i> Logout</a>
+           {% else %}
+               <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home"></i> Главная</a>
+            <a class="nav-link" href="{% url 'reels' %}"><i class="fas fa-film"></i> Reels</a>
+            <a class="nav-link" href="{% url 'chats'  %}"><i class="fas fa-envelope"></i> Сообщения</a>
+            <a class="nav-link" href="{% url 'add_post' %}"><i class="fas fa-plus-square"></i> Создать</a>
+                <a class="nav-link" href="{% url 'reels' %}"><i class="fas fa-film"></i> Reels</a>
+           {% endif %}
+        </nav>
+    </div>
+    <main class="content">
+        {% block content %}{% endblock %}
+    </main>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
